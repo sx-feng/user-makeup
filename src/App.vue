@@ -1,26 +1,51 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="app">
+    <div class="page-wrapper">
+      <router-view />
+    </div>
+
+    <!-- 用 $route.name 来控制底部高亮 -->
+    <BottomNav
+      :modelValue="$route.name"
+      @update:modelValue="onTabChange"
+    />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import BottomNav from "./components/BottomNav.vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: "App",
+  components: { BottomNav },
+
+  methods: {
+    onTabChange(name) {
+      if (name && name !== this.$route.name) {
+        this.$router.push({ name });   // 点击底部 tab 时切换路由
+      }
+    }
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+    background-color: #f8f6f6;
+}
+
+.page-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 4.25rem; /* 给底部导航留空间 */
 }
 </style>
