@@ -1,44 +1,56 @@
 <template>
   <div class="card">
     <!-- 左侧头像（固定宽高） -->
-    <div class="avatar-wrap">
-    <img :src="data.avatar" class="avatar" />
-</div> 
+  <div class="avatar-wrap">
+  <img :src="data.avatar" class="avatar" />
+  <div class="work-overlay">
+    查看{{ data.worksCount || 100 }}个作品 >
+  </div>
+</div>
+
     <!-- 右侧内容 -->
     <div class="info">
 
-      <!-- 名称 + 在线状态同行 -->
+      <!-- 名称 + 头像在线状态同行 -->
       <div class="row-top">
-        <div class="name">{{ data.name }}</div>
+        <!-- 左侧头像 -->
+        <div class="heards"><img :src="data.avatar" class="heardss" /></div>
+        <!-- 右侧描述 -->
+        <div>
+          <div class="name">{{ data.name }}</div>
+          <!-- 描述 -->
+          <div class="desc-tags">
+  <span v-for="(d, index) in data.desc" 
+        :key="index" 
+        class="desc-tag">
+    {{ d }}
+  </span>
+</div>
+
+        </div>
 
         <!-- 在线状态放在头像正下方的一列，但仍保持对齐方式 -->
-        <div class="state">
-          <span
-            class="state-tag"
-            :class="data.status === 'online' ? 'green' : 'gray'"
-          >
+        <!-- <div class="state">
+          <span class="state-tag" :class="data.status === 'online' ? 'green' : 'gray'">
             {{ data.status === 'online' ? '在线' : '离线' }}
           </span>
-        </div>
+        </div> -->
       </div>
-
-      <!-- 描述 -->
-      <div class="desc">{{ data.desc }}</div>
-
       <!-- 评分 -->
-      <div class="rate">
-        ⭐⭐⭐⭐⭐ <span class="score">{{ data.score }}</span>
-        （{{ data.comments }}条评价）
-      </div>
+    <div class="rate">
+  <img v-for="i in 5"
+       :key="i"
+       class="star-img"
+       src="/icons/zs星星.png" />
+
+  <span class="score">{{ data.score }}</span>
+  &nbsp; &nbsp; &nbsp;{{ data.comments }}条评价
+</div>
+
 
       <!-- 标签（新娘妆、写真妆等） -->
       <div class="tags">
-        <span
-          v-for="(tag, index) in data.tags"
-          :key="index"
-          class="tag"
-          :class="tagClass(tag)"
-        >
+        <span v-for="(tag, index) in data.tags" :key="index" class="tag" :class="tagClass(tag)">
           {{ tag }}
         </span>
       </div>
@@ -75,56 +87,72 @@ export default {
 
 <style scoped>
 /* —— 外层卡片 —— */
+/* --- 卡片整体 --- */
 .card {
-  position: relative;
+   position: relative;
   background: #fff;
+  width: 90%;
   margin: 1rem auto;
-  padding: 0.8rem 0.8rem 3.5rem;
-  border-radius: 0.7rem;
+  border-radius: 0.9rem;
   display: flex;
-  width: 88%;
-  height: 7.5rem;
-  box-shadow: 0 0.15rem 0.35rem rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.15rem 0.4rem rgba(0, 0, 0, 0.05);
 }
 
-/* —— 头像 —— */
+/* --- 左侧头像整体块 --- */
 .avatar-wrap {
-  width: 6rem;                 /* 整体比头像大一圈 */
-  height:8rem;
-  background: #f7f4f5;           /* 背景色（淡粉区分） */
-  border-radius: 0.8rem;         /* 外框圆角更圆润 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 6.2rem;
+  height: 8.5rem;
+  border-radius: 0.9rem 0 0 0.9rem;
+  overflow: hidden;
+  background: #f7f4f5;
+  flex-shrink: 0;
   margin-right: 1rem;
+  border: 1px solid #d6d6d6;
+    position: relative;
+}
+/* 底部“查看作品”遮罩条 */
+.work-overlay {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0.25rem 0;
+  background: rgba(238, 232, 232, 0.35);  /* 半透明黑 */
+  color: #fff;
+  font-size: 0.65rem;
+  text-align: center;
+  white-space: nowrap;
 }
 
+/* 头像填满外框 */
 .avatar {
-  width: 5rem;
-  height: 7rem;
-  border-radius: 0.5rem;         /* 头像圆角 */
-  object-fit: cover;             /* 保证图片不变形 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 关键：填满裁剪 */
 }
 
+/* --- 右侧内容 --- */
+.info {
+  flex: 1;
+}
 
-/* —— 行布局（名字 + 状态） —— */
+/* 名称 + 在线状态 */
 .row-top {
+  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   margin-bottom: 0.25rem;
 }
 
-/* 名称 */
 .name {
-  font-size: 1.05rem;
+  font-size: 0.9rem;
   font-weight: bold;
   margin-right: 0.5rem;
-  white-space: nowrap;
 }
 
-/* —— 在线标签 —— */
 .state-tag {
-  padding: 0.15rem 0.55rem;
+  padding: 0.15rem 0.5rem;
   border-radius: 1rem;
   font-size: 0.75rem;
 }
@@ -135,71 +163,138 @@ export default {
 }
 
 .gray {
-  background: #efefef;
+  background: #eee;
   color: #999;
+}
+/* 描述标签容器 */
+.desc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.2rem 0 0.35rem 0;
+}
+
+/* 描述标签（椭圆气泡） */
+.desc-tag {
+  padding: 0.18rem 0.5rem;
+  font-size: 0.6rem;
+  border-radius: 1rem;
+  background: #ffeaf2;   /* 粉色柔和背景 */
+  color: #ff4177;        /* 粉色文本 */
+  display: inline-block;
+  white-space: nowrap;
 }
 
 /* 描述 */
 .desc {
-  font-size: 0.9rem;
-  color: #777;
-  margin-bottom: 0.3rem;
+  color: #666;
+  margin-bottom: 0.35rem;
+  font-size: 0.8rem;
 }
 
 /* 评分 */
 .rate {
-  font-size: 0.9rem;
-  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;   /* ⬅ 星星 + 文字垂直居中 */
+  font-size: 0.6rem;
 }
 
 .score {
-  color: #ff9900;
+   color: #ff9b00;
   font-weight: bold;
+  margin-left: 0.25rem;
 }
-
-/* —— 标签 —— */
-.tags {
-  margin-top: 0.2rem;
-}
-
 .tag {
-  display: inline-block;
-  padding: 0.25rem 0.55rem;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.55rem;
   border-radius: 1rem;
-  font-size: 0.75rem;
-  margin-right: 0.4rem;
-  margin-bottom: 0.25rem;
+  margin-right: 0.3rem;
+  margin-bottom: 0.15rem;
 }
 
-/* 四种类型 */
-.pink { background: #ffe5f0; color: #ff3b6b; }
-.blue { background: #e5f0ff; color: #3f73ff; }
-.purple { background: #f0e6ff; color: #8b4cff; }
-.yellow { background: #fff9d5; color: #c9a100; }
+/* 标签颜色 */
+.pink {
+  background: #ffe5f0;
+  color: #ff3b6b;
+}
 
-/* —— 按钮组 —— */
+.blue {
+  background: #e5f0ff;
+  color: #3f73ff;
+}
+
+.purple {
+  background: #f0e6ff;
+  color: #8b4cff;
+}
+
+.yellow {
+  background: #fff9d5;
+  color: #c9a100;
+}
+
+/* 按钮区域 */
 .btns {
   position: absolute;
-  right: 0.8rem;
-  bottom: 0.8rem;
+  right: 0.8rem;    /* 右边距 */
+  bottom: 0.7rem;   /* 下边距 */
   display: flex;
   gap: 0.6rem;
+  z-index: 10;       /* 确保在内容之上 */
 }
 
+
+/* 咨询按钮（白色+灰边） */
 .btn-chat {
   background: #fff;
-  border: 1px solid #aaa;
-  padding: 0.3rem 1.1rem;
-  border-radius: 1rem;
-  font-size: 0.8rem;
+  border: 1px solid #d0d0d0;
+  color: #666;
+  padding: 0.2rem 0.8rem;
+  border-radius: 1.5rem;
+  font-size: 0.65rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+/* 预约/下单按钮（粉色风格） */
 .btn-order {
-  background: #ff3b6b;
+  background: linear-gradient(135deg, #ff7ca8 0%, #ff4b7d 100%);
   color: #fff;
   border: none;
-  padding: 0.3rem 1.1rem;
-  border-radius: 1rem;
-  font-size: 0.8rem;
+  padding: 0.2rem 0.8rem;
+  border-radius: 1.5rem;
+  font-size: 0.65rem;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(255, 88, 125, 0.25);
+}
+
+/* 按下时小缩放动效 */
+.btn-chat:active,
+.btn-order:active {
+  transform: scale(0.96);
+  transition: 0.08s;
+}
+
+/* 化妆师头像区域 */
+.heards {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #e4d9d9;
+  margin-right: 0.5rem;
+
+}
+.star-img {
+  width: 0.7rem;
+  height: 0.7rem;
+  object-fit: contain;
+  margin-right: 0.15rem;
+  display: inline-block;
+  display: block; 
+}
+
+.heardss {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
 }
 </style>

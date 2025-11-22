@@ -1,19 +1,15 @@
 <template>
   <div class="home-header">
     <!-- 左侧标题 -->
-    <div class="title">用户端首页</div>
+
 
     <!-- 中间搜索框 -->
    <div class="search-box">
   <img class="search-icon" src="/icons/搜索.png" />
   <input type="text" placeholder="搜索化妆师..." />
+      <!-- 右侧铃铛 -->
+   <img class="bell" src="/icons/筛选.png"/></div>
 </div>
-
-
-    <!-- 右侧铃铛 -->
-  <div>
-    <img class="bell" src="/icons/211铃铛-线性.png"/></div>
-  </div>
 </template>
 
 <script>
@@ -24,12 +20,11 @@ export default {
 
 <style scoped>
 .home-header {
- 
   padding: 0.6rem 1rem;   
   display: flex;
   align-items: center;
   background: #fff;
-  border-bottom: 0.0625rem solid #eee;
+  /* border-bottom: 0.0625rem solid #eee; */
 }
 
 .title {
@@ -65,15 +60,15 @@ export default {
 }
 
 .bell {
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.3rem;
+  height: 1.3rem;
   margin-left: 0.6rem;
   font-size: 1.3rem;
   color: #666;
 }
 .search-icon {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.1rem;
+  height: 1.1rem;
   margin-right: 0.4rem;
   object-fit: contain;
   display: block;
