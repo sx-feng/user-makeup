@@ -6,7 +6,7 @@
     <!-- 中间搜索框 -->
    <div class="search-box">
   <img class="search-icon" src="/icons/搜索.png" />
-  <input type="text" placeholder="搜索化妆师..." />
+  <input type="text" placeholder="搜索" />
       <!-- 右侧铃铛 -->
    <img class="bell" src="/icons/筛选.png"/></div>
 </div>
@@ -39,7 +39,7 @@ export default {
   display: flex;
   align-items: center;
   padding: 0.4rem 0.8rem;
-  border-radius: 999px;
+  border-radius:0.5rem;
   background: #f5f5f5;
   border: 0.0625rem solid #ddd;
 }

@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       tabs: [
-        { label: "公司推荐", value: "recommend" },
+        { label: "综合推荐", value: "recommend" },
         { label: "距离最近", value: "distance" },
         { label: "评分最高", value: "score" },
         { label: "价格最优", value: "price" }

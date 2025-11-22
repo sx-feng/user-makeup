@@ -41,8 +41,8 @@ export default {
 <style scoped>
 .chat-switch {
   width: 90%;
-  margin: 0.6rem auto;
-  padding: 0.25rem;
+  margin: 0.3rem auto;
+  padding: 0.1rem;
   background: #eeeeee;
   border-radius: 999px;
   display: flex;
@@ -52,8 +52,8 @@ export default {
 .switch-item {
   flex: 1;
   text-align: center;
-  padding: 0.35rem 0;
-  font-size: 0.9rem;
+  padding: 0.2rem 0;
+  font-size: 0.8rem;
   color: #555;
   border-radius: 999px;
   cursor: pointer;

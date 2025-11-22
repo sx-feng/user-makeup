@@ -1,6 +1,5 @@
 <template>
   <div class="category-bar">
-
     <div
       v-for="item in list"
       :key="item.value"
@@ -10,7 +9,6 @@
     >
       {{ item.label }}
     </div>
-
   </div>
 </template>
 
@@ -44,26 +42,28 @@ export default {
 <style scoped>
 .category-bar {
   display: flex;
-  align-items: center;
   padding: 0.4rem 0.6rem;
-  gap: 0.6rem;
   background: #fff;
-  box-sizing: border-box;
+  gap: 0.6rem;
 }
 
+/* 圆角 pill 按钮 */
 .cat-item {
-  padding: 0.25rem 0.6rem;
+  padding: 0.35rem 1rem;
   font-size: 0.85rem;
-  color: #555;
-  border-radius: 0.5rem;
-  background: #f7f7f7;
+  border-radius: 999px;    /* 让按钮变得非常圆 */
+  background: #f3f4f6;
+  color: #666;
   cursor: pointer;
   transition: 0.2s;
+  border: 1px solid transparent;
 }
 
+/* 激活时 */
 .cat-item.active {
-  background: #d7e8ff;
-  color: #0a59ff;
+  background: #fdd4f3;
+  color: #fa0678;
+  border-color: #ffa5e4;
   font-weight: 600;
 }
 </style>

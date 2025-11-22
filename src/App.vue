@@ -40,7 +40,7 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-    background-color: #f8f6f6;
+    background-color: #faf8f8;
 }
 
 .page-wrapper {
