@@ -10,6 +10,10 @@
     />
     <MineActions :list="actionList" @select="onSelect" />
     <MineCards :recent="recentList" :artists="favArtists" />
+      <BottomNav
+      :modelValue="$route.name"
+      @update:modelValue="onTabChange"
+    />
   </div>
 </template>
 
@@ -17,6 +21,7 @@
 import MineHeader from "@/MineComponents/MineHeader.vue";
 import MineActions from "@/MineComponents/MineActions.vue";
 import MineCards from "@/MineComponents/MineCards.vue";
+import BottomNav from "../components/BottomNav.vue";
 // eslint-disable-next-line no-unused-vars
 const recentList = [
   { id: 1, name: "化妆师 · 小美", date: "2025-02-01" },
@@ -33,7 +38,8 @@ export default {
   components: {
     MineHeader,
     MineActions,
-    MineCards
+    MineCards,
+    BottomNav 
   },
   data() {
     return {

@@ -4,20 +4,16 @@
       <router-view />
     </div>
 
-    <!-- 用 $route.name 来控制底部高亮 -->
-    <BottomNav
-      :modelValue="$route.name"
-      @update:modelValue="onTabChange"
-    />
+ 
   </div>
 </template>
 
 <script>
-import BottomNav from "./components/BottomNav.vue";
+
 
 export default {
   name: "App",
-  components: { BottomNav },
+
 
   methods: {
     onTabChange(name) {

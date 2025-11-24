@@ -1,8 +1,8 @@
 <template>
-  <div class="card">
+  <div class="card" @click="goDetail">
     <!-- 左侧头像（固定宽高） -->
   <div class="avatar-wrap">
-  <img :src="data.avatar" class="avatar" />
+  <img :src="data.cover" class="avatar" />
   <div class="work-overlay">
     查看{{ data.worksCount || 100 }}个作品 >
   </div>
@@ -53,7 +53,19 @@
         <span v-for="(tag, index) in data.tags" :key="index" class="tag" :class="tagClass(tag)">
           {{ tag }}
         </span>
+        <!-- 距离显示（仅当有距离字段时出现） -->
+
+
       </div>
+      <div class="price" v-if="data.price">
+  ￥{{ data.price }}
+  <span class="distance" v-if="data.distance">
+  <img class="loc-icon" src="@/assets/定位.png" />
+  {{ formatDistance(data.distance) }}
+  
+</span>
+</div>
+
 
       <!-- 右下角按钮 -->
       <div class="btns">
@@ -80,8 +92,22 @@ export default {
         case "日常妆": return "yellow";
         default: return "";
       }
-    }
+    },    
+   
+  formatDistance(d) {
+    if (!d) return "";
+    // 大于 1000 米转 km
+    return d > 1000 ? (d / 1000).toFixed(1) + " km" : Math.round(d) + " m";
+  },
+   goDetail() {
+    this.$router.push({
+      name: "makeupDetail",
+      params: { id: this.data.id }
+    });
   }
+}
+
+  
 };
 </script>
 
@@ -101,7 +127,7 @@ export default {
 /* --- 左侧头像整体块 --- */
 .avatar-wrap {
   width: 6.2rem;
-  height: 8.5rem;
+  height: 9.1rem;
   border-radius: 0.9rem 0 0 0.9rem;
   overflow: hidden;
   background: #f7f4f5;
@@ -235,6 +261,7 @@ export default {
 
 /* 按钮区域 */
 .btns {
+ 
   position: absolute;
   right: 0.8rem;    /* 右边距 */
   bottom: 0.7rem;   /* 下边距 */
@@ -297,4 +324,24 @@ export default {
   height: 3rem;
   border-radius: 50%;
 }
+.distance {                                                   
+  margin-top: 4px;
+  font-size: 0.6rem;
+  color: #999;
+}
+
+.loc-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  vertical-align: middle;   /* 图标和文字对齐 */
+  opacity: 0.75;            /* 稍微透明一点更                     柔和 */
+}
+.price {
+  margin-bottom: 2rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #ff4b7d;
+}
+
+
 </style>

@@ -6,15 +6,41 @@
     <!-- 中间搜索框 -->
    <div class="search-box">
   <img class="search-icon" src="/icons/搜索.png" />
-  <input type="text" placeholder="搜索" />
-      <!-- 右侧铃铛 -->
-   <img class="bell" src="/icons/筛选.png"/></div>
+   <input
+        type="text"
+        :value="modelValue"
+        @input="onInput"
+        @keyup.enter="emitSearch"
+        placeholder="搜索"
+      />
+      <!-- 右侧筛选 -->
+        <img
+        class="bell"
+        src="/icons/筛选.png"
+        @click="$emit('open-filter')"
+      /></div>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'HomeHeader'
+  name: 'HomeHeader',
+   props: {
+    modelValue: {
+      type: String,
+      default: ""
+    }
+  },
+   emits: ["update:modelValue", "search", "open-filter"],
+   methods: {
+    onInput(e) {
+      this.$emit("update:modelValue", e.target.value);
+    },
+    emitSearch() {
+      // 把当前关键字传给父组件
+      this.$emit("search", this.modelValue);
+    }
+  }
 }
 </script>
 
