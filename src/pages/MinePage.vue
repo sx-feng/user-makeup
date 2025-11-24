@@ -10,10 +10,7 @@
     />
     <MineActions :list="actionList" @select="onSelect" />
     <MineCards :recent="recentList" :artists="favArtists" />
-      <BottomNav
-      :modelValue="$route.name"
-      @update:modelValue="onTabChange"
-    />
+   <BottomNav v-model="currentTab" />
   </div>
 </template>
 
@@ -43,6 +40,7 @@ export default {
   },
   data() {
     return {
+       currentTab: this.$route.name,
       actionList: [
         { name: "订单", icon: "📄", key: "order" },
         { name: "收藏", icon: "⭐", key: "fav" },

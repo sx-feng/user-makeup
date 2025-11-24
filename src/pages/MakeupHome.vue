@@ -13,10 +13,9 @@
     <div class="list">
       <MakeupCard v-for="item in sortedList" :key="item.id" :data="item" />
     </div>
-   <BottomNav
-      :modelValue="$route.name"
-      @update:modelValue="onTabChange"
-    />
+<BottomNav v-model="currentTab" />
+
+
   </div>
 </template>
 
@@ -25,7 +24,6 @@ import HomeHeader from "../components/HomeHeader.vue";
 import FilterTabs from "../components/FilterTabs.vue";
 import MakeupCard from "../components/MakeupCard.vue";
 import BottomNav from "../components/BottomNav.vue";
-
 import avatar1 from "@/assets/avatar1.png";
 import avatar2 from "@/assets/avatar2.png";
 import avatar3 from "@/assets/avatar3.png";
@@ -45,6 +43,7 @@ export default {
       keyword: "",
       currentSort: "recommend",
       userLocation: null,
+      currentTab: "home",
 
       // ❗ 假数据（你后面可改成 API 数据）
       makeupList: [
@@ -80,6 +79,21 @@ export default {
         },
         {
           id: 3,
+          cover: "/icons/image3.png",
+           background: "/icons/bg3.png",
+          avatar: avatar3, 
+          name: "美羊羊",
+          desc: ["专业化妆师", "日常妆大师"],
+          score: 9.6,
+          comments: 8600,
+          status: "offline",
+          tags: ["日常妆", "舞台妆"],
+          lat: 31.2350,
+          lng: 121.5040,
+          price: 999
+        },
+         {
+          id: 4,
           cover: "/icons/image3.png",
            background: "/icons/bg3.png",
           avatar: avatar3, 
@@ -204,7 +218,9 @@ export default {
         );
 
       return s * 6378137; // 返回单位：米
-    }
+    },
+
+
   },
 
   /** 页面加载时获取用户定位 */
@@ -219,7 +235,7 @@ export default {
 .home {
   padding-bottom: 0.8rem;
   /* 留空间给底部导航栏 */
-  background-color: #f7f4f4;
+  background-color: #ffffff;
 }
 
 .list {

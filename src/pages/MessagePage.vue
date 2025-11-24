@@ -1,6 +1,7 @@
 <template>
   <div class="message-page">
-    <TopBar />
+    <TopBar v-model="keyword" />
+
 
     <!-- 聊天 / 互动 -->
     <ChatSwitch v-model="mode" />
@@ -9,11 +10,14 @@
     <CategorySelector v-model="category" />
 
     <!-- 会话列表 -->
-    <MessageList
-      :list="messageList"
-      :active-id="activeId"
-      @select="handleSelect"
-    />
+   <MessageList
+  :list="filteredList"
+  :active-id="activeId"
+  @select="handleSelect"
+/>
+
+ <BottomNav v-model="currentTab" />
+
   </div>
 </template>
 
@@ -26,27 +30,29 @@ import systemAvatar from "@/assets/avater.png";
 import avatar1 from "@/assets/avatar1.png";
 import avatar2 from "@/assets/avatar2.png";
 import avatar3 from "@/assets/avatar3.png";
-
+import BottomNav from "../components/BottomNav.vue";
 export default {
   name: "MessagePage",
   components: {
     TopBar,
     ChatSwitch,
     CategorySelector,
-    MessageList
+    MessageList,
+    BottomNav 
   },
   data() {
     return {
+      keyword: "",
       mode: "chat",
       category: "all",
       activeId: 2,
-
+currentTab: this.$route.name,
       // ✅ 模拟“后端返回的最终格式”
       messageList: [
         {
           id: 1,
           name: "系统通知",
-          preview: "您有新的婚庆订单消息",
+          preview: "您有新的婚庆订单消息",                 
           time: "11:29",
           type: "system",
           avatar: systemAvatar  // <--- 正确：头像字段叫 avatar
@@ -58,7 +64,7 @@ export default {
           time: "11:30",
           type: "user",
           avatar: avatar2,  // <--- 正确
-          role: "client"
+          role: "artist"
         },
         {
           id: 3,
@@ -67,7 +73,7 @@ export default {
           time: "11:30",
           type: "user",
           avatar: avatar3,  // <--- 正确
-          role: "client"
+          role: "company"
         },
         {
           id: 4,
@@ -76,16 +82,54 @@ export default {
           time: "11:32",
           type: "user",
            avatar: avatar1,        // <--- 没头像用默认头像
-          role: "client"
+           role: "company"
         }
       ]
     };
   },
   methods: {
-    handleSelect(item) {
-      this.activeId = item.id;
-    }
+handleSelect(item) {
+  this.$loading.show();
+  setTimeout(() => {
+    this.$router.push({
+      name: "chat",
+      params: { id: item.id },
+      query: {
+        name: item.name,
+        avatar: item.avatar
+      }
+    });
+    this.$loading.hide();
+  }, 1000);
+}
+
+
+  },
+  computed: {
+ filteredList() {
+  let list = this.messageList;
+
+  // ⭐ 搜索
+  if (this.keyword.trim()) {
+    const k = this.keyword.trim();
+    list = list.filter(
+      i => i.name.includes(k) || i.preview.includes(k)
+    );
   }
+
+  // ⭐ 分类筛选
+  if (this.category === "wedding") {
+    list = list.filter(i => i.role === "company");
+  } else if (this.category === "makeup") {
+    list = list.filter(i => i.role === "artist");
+  } 
+  // category = "all" 就不筛选
+
+  return list;
+}
+
+}
+
 };
 </script>
 

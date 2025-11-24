@@ -67,7 +67,7 @@ export default {
   padding: 0.4rem 0.8rem;
   border-radius:0.5rem;
   background: #f5f5f5;
-  border: 0.0625rem solid #ddd;
+  border: 0.0625rem solid #ffffff;
 }
 
 .search-icon {

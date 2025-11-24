@@ -35,7 +35,8 @@
 >
   {{ detail.follow ? '已关注' : '关注' }}
 </button>
-<button class="btn-msg" @click="goChat">私信</button>
+<button class="btn-msg" @click="goChat(detail)">私信</button>
+
 
     </div>
   </div>
@@ -44,11 +45,35 @@
 
 
     <!-- 作品列表 -->
-    <h3 class="section-title">作品（共 {{ works.length }} 个）</h3>
+   <!-- 作品分类切换 -->
+<div class="work-tabs">
+  <span
+    v-for="t in tabs"
+    :key="t.value"
+    class="tab"
+    :class="{ active: currentTab === t.value }"
+    @click="currentTab = t.value"
+  >
+    {{ t.label }}
+  </span>
+</div>
+
     <div class="works">
-      <div v-for="(w, index) in works" :key="index" class="work-item">
-        <img :src="w" class="work-img" />
-      </div>
+     <div
+  v-for="(w, index) in filteredWorks"
+
+  :key="index"
+  class="work-item"
+  @click="showPreview(w)"
+>
+  <img :src="w" class="work-img" />
+</div>
+<!-- 大图预览 -->
+<div v-if="previewImage" class="image-preview" @click="previewImage=null">
+  <img :src="previewImage" />
+</div>
+
+      
     </div>
 
   </div>
@@ -69,6 +94,14 @@ export default {
   data() {
     return {
       tab: "notes",
+      previewImage: null,
+       currentTab: "all",
+    tabs: [
+      { label: "全部", value: "all" },
+      { label: "客片", value: "best" },
+      { label: "视频", value: "video" },
+      { label: "其他", value: "other" }
+    ],
       allMakeup: [
         {
           id: 1,
@@ -117,15 +150,36 @@ export default {
     works() {
       if (!this.detail) return [];
       return Array(20).fill(this.detail.cover);
-    }
+    },
+     filteredWorks() {
+    if (this.currentTab === "all") return this.works;
+    if (this.currentTab === "best") return this.works.slice(0, 8);
+    if (this.currentTab === "video") return this.works.slice(8, 12);
+    if (this.currentTab === "other") return this.works.slice(12, 20);
+    return this.works;
+  }
   },
   methods: {
   toggleFollow() {
     this.detail.follow = !this.detail.follow;
   },
-    goChat() {
-    this.$router.push(`/chat/${this.detail.id}`);
-  }
+   goChat(user) {
+  this.$router.push({
+    name: "chat",
+    params: {
+      id: user.id
+    },
+    query: {
+      name: user.name,
+      avatar: user.avatar
+    }
+  });
+}
+,
+  showPreview(img) {
+  this.previewImage = img;
+}
+
 }
 
 };
@@ -262,6 +316,44 @@ flex-direction: row;
 .work-img {
   width: 100%;
   border-radius: 0.5rem;
+}
+.image-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.image-preview img {
+  width: 90%;
+  height: auto;
+  max-height: 90vh;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.work-tabs {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0.5rem 1rem 0.5rem;
+}
+
+.work-tabs .tab {
+  padding: 0.3rem 0.8rem;
+  background: #f1f1f1;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+}
+
+.work-tabs .tab.active {
+  background: #ff4b7d;
+  color: #fff;
 }
 
 </style>

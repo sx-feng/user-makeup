@@ -1,7 +1,7 @@
 <template>
-  <div class="card" @click="goDetail">
+  <div class="card" >
     <!-- 左侧头像（固定宽高） -->
-  <div class="avatar-wrap">
+  <div class="avatar-wrap" @click="goDetail">
   <img :src="data.cover" class="avatar" />
   <div class="work-overlay">
     查看{{ data.worksCount || 100 }}个作品 >
@@ -9,7 +9,7 @@
 </div>
 
     <!-- 右侧内容 -->
-    <div class="info">
+    <div class="info" >
 
       <!-- 名称 + 头像在线状态同行 -->
       <div class="row-top">
@@ -69,7 +69,8 @@
 
       <!-- 右下角按钮 -->
       <div class="btns">
-        <button class="btn-chat">咨询</button>
+        <button class="btn-chat" @click="goDetailChat">咨询</button>
+
         <button class="btn-order">下单</button>
       </div>
     </div>
@@ -104,7 +105,19 @@ export default {
       name: "makeupDetail",
       params: { id: this.data.id }
     });
-  }
+  },
+goDetailChat() {
+  this.$router.push({
+    name: "chat",
+    params: { id: this.data.id },
+    query: {
+      name: this.data.name,
+      avatar: this.data.avatar
+    }
+  });
+}
+
+
 }
 
   
@@ -142,13 +155,24 @@ export default {
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: 0.25rem 0;
-  background: rgba(238, 232, 232, 0.35);  /* 半透明黑 */
+  height: 40%; /* 占下面40%的高度，按你截图效果 */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.15) 40%,
+    rgba(0, 0, 0, 0.35) 70%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
   color: #fff;
   font-size: 0.65rem;
   text-align: center;
-  white-space: nowrap;
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
 }
+
 
 /* 头像填满外框 */
 .avatar {

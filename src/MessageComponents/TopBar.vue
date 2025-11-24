@@ -2,18 +2,25 @@
   <div class="top-bar">
     <div class="search-box">
       <img src="@/assets/search.png" class="search-icon" />
-      <input
-        type="text"
-        class="search-input"
-        placeholder="搜索"
-      />
+   <input
+  type="text"
+  class="search-input"
+  placeholder="搜索"
+  :value="modelValue"
+  @input="$emit('update:modelValue', $event.target.value)"
+/>
+
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "MessageTopBar"
+  name: "MessageTopBar",
+  props: {
+    modelValue: String
+  },
+  emits: ["update:modelValue"]
 };
 </script>
 
@@ -21,7 +28,7 @@ export default {
 .top-bar {
   padding: 0.7rem 1rem;
   background: #fff;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ffffff;
 }
 
 /* 外层圆角输入框 */
@@ -30,7 +37,7 @@ export default {
   height: 2rem;
   background: #f8f8f8;
   border-radius:0.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid #ffffff;
   display: flex;
   align-items: center;
   padding: 0 1rem;

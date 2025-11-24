@@ -1,29 +1,20 @@
 <template>
-  <div class="app">
-    <div class="page-wrapper">
-      <router-view />
-    </div>
-
- 
-  </div>
+  <router-view />
+  <GlobalLoading ref="loading" />
 </template>
 
 <script>
-
+import GlobalLoading from "@/components/GlobalLoading.vue";
 
 export default {
-  name: "App",
-
-
-  methods: {
-    onTabChange(name) {
-      if (name && name !== this.$route.name) {
-        this.$router.push({ name });   // 点击底部 tab 时切换路由
-      }
-    }
+  components: { GlobalLoading },
+  mounted() {
+    // 挂载全局 loading 供所有页面使用
+    this.$loading = this.$refs.loading;
   }
 };
 </script>
+
 
 <style>
 html, body {
@@ -36,7 +27,7 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-    background-color: #faf8f8;
+    
 }
 
 .page-wrapper {

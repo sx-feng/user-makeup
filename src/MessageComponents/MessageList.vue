@@ -113,9 +113,8 @@ export default {
 }
 
 .message-row.active {
-  border: 1px solid #4c8fff;
-  border-radius: 6px;
-  background: #f5f8ff;
+  border: none;
+  background: transparent;
 }
 
 /* 左侧头像区域 */

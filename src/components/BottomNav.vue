@@ -4,11 +4,11 @@
       v-for="item in tabs"
       :key="item.name"
       class="nav-item"
-      :class="{ active: current === item.name }"
-      @click="$emit('update:modelValue', item.name)"
+      :class="{ active: modelValue === item.name }"
+      @click="switchTab(item.name)"
     >
       <img
-        :src="current === item.name ? item.selectedIcon : item.icon"
+        :src="modelValue === item.name ? item.selectedIcon : item.icon"
         class="nav-icon"
       />
       <div class="nav-text">{{ item.label }}</div>
@@ -22,10 +22,8 @@ export default {
   props: {
     modelValue: String
   },
+
   computed: {
-    current() {
-      return this.modelValue;
-    },
     tabs() {
       return [
         {
@@ -48,10 +46,16 @@ export default {
         }
       ];
     }
+  },
+
+  methods: {
+    switchTab(name) {
+      this.$emit("update:modelValue", name); 
+      this.$router.push({ name }); // 直接切换路由
+    }
   }
 };
 </script>
-
 
 <style scoped>
 .bottom-nav {
@@ -59,9 +63,9 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 4.25rem; /* 68px -> 68/16 = 4.25rem */
+  height: 4.25rem;
   background: #fff;
-  border-top: 0.0625rem solid #eee; /* 1px */
+  border-top: 1px solid #eee;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -72,7 +76,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 0.8125rem; /* 13px -> 13/16 */
+  font-size: 0.8125rem;
   color: #666;
 }
 
@@ -81,8 +85,8 @@ export default {
 }
 
 .nav-icon {
-  width: 1.5rem;  /* 24px -> 24/16 */
+  width: 1.5rem;
   height: 1.5rem;
-  margin-bottom: 0.25rem; /* 4px */
+  margin-bottom: 0.25rem;
 }
 </style>
