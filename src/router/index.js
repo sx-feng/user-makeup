@@ -29,7 +29,12 @@ const routes = [
   path: '/chat/:id',
   name: 'chat',
   component: () => import('@/pages/ChatPage.vue')
+},{
+  path: "/orders",
+  name: "orders",
+  component: () => import("@/pagess/OrdersPage.vue")
 }
+
 
 ];
 

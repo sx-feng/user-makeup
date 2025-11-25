@@ -7,7 +7,8 @@
       @click="clickItem(item)"
     >
       <div class="icon-wrapper">
-        <span class="icon">{{ item.icon }}</span>
+   <img :src="item.icon" class="action-icon" />
+
       </div>
       <div class="text">{{ item.name }}</div>
     </div>
@@ -65,4 +66,10 @@ const clickItem = (item) => {
   font-size: 0.8rem;
   color: #333;
 }
+.action-icon {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
 </style>

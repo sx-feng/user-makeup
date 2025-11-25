@@ -89,7 +89,7 @@ currentTab: this.$route.name,
   },
   methods: {
 handleSelect(item) {
-  this.$loading.show();
+
   setTimeout(() => {
     this.$router.push({
       name: "chat",
@@ -99,8 +99,8 @@ handleSelect(item) {
         avatar: item.avatar
       }
     });
-    this.$loading.hide();
-  }, 1000);
+    
+  }, 100);
 }
 
 

@@ -9,7 +9,7 @@
       @setting-click="onSetting"
     />
     <MineActions :list="actionList" @select="onSelect" />
-    <MineCards :recent="recentList" :artists="favArtists" />
+    <!-- <MineCards :recent="recentList" :artists="favArtists" /> -->
    <BottomNav v-model="currentTab" />
   </div>
 </template>
@@ -17,7 +17,7 @@
 <script>
 import MineHeader from "@/MineComponents/MineHeader.vue";
 import MineActions from "@/MineComponents/MineActions.vue";
-import MineCards from "@/MineComponents/MineCards.vue";
+// import MineCards from "@/MineComponents/MineCards.vue";
 import BottomNav from "../components/BottomNav.vue";
 // eslint-disable-next-line no-unused-vars
 const recentList = [
@@ -35,26 +35,28 @@ export default {
   components: {
     MineHeader,
     MineActions,
-    MineCards,
+    // MineCards,
     BottomNav 
   },
   data() {
     return {
        currentTab: this.$route.name,
       actionList: [
-        { name: "订单", icon: "📄", key: "order" },
-        { name: "收藏", icon: "⭐", key: "fav" },
-        { name: "待评价", icon: "💬", key: "review" },
-        { name: "待付款", icon: "💰", key: "pay" },
-        { name: "钱包", icon: "💳", key: "wallet" },
-      ],
+  { name: "订单",     icon: "/icons/订单 (4).png",     key: "order" },
+  { name: "收藏",     icon: "/icons/收藏 (4).png",     key:  "fav" },
+  { name: "待评价",   icon: "/icons/待评价.png",   key: "review" },
+  { name: "待付款",   icon: "/icons/待付款.png",   key: "pay" },
+  { name: "钱包",     icon: "/icons/钱包.png",     key: "wallet" },
+]
+,
     };
   },
   methods: {
     onSelect(item) {
       console.log("点击：", item);
-      // 这里写跳转逻辑，比如：
-      // if (item.key === 'order') this.$router.push('/orders')
+      if (item.key === "order") {
+    this.$router.push("/orders");
+  }
     },
     onService() {
       console.log("点击客服");

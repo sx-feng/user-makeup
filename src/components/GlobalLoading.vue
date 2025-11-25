@@ -1,72 +1,35 @@
 <template>
-  <div v-if="visible" class="loading-mask">
-    <div class="loading-box">
-      <div class="spinner"></div>
-      <div class="text">加载中...</div>
-    </div>
-  </div>
+  <transition name="page-fade">
+    <div v-if="visible" class="page-mask"></div>
+  </transition>
 </template>
 
 <script>
 export default {
-  name: "GlobalLoading",
-  data() {
-    return {
-      visible: false
-    };
-  },
-  methods: {
-    show() {
-      this.visible = true;
-    },
-    hide() {
-      this.visible = false;
-    }
+  name: "PageTransition",
+
+  props: {
+    visible: { type: Boolean, required: true }
   }
-};
+}
 </script>
 
 <style scoped>
-.loading-mask {
+.page-mask {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.35);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  inset: 0;
+  background: #fff;
   z-index: 9999;
 }
 
-.loading-box {
-  background: white;
-  padding: 20px 30px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* 淡出动画 */
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition: opacity 0.35s ease;
 }
 
-.spinner {
-  width: 32px;
-  height: 32px;
-  border: 4px solid #ff88aa;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-
-.text {
-  margin-top: 10px;
-  color: #666;
-  font-size: 14px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+.page-fade-enter-from,
+.page-fade-leave-to {
+  opacity: 0;
 }
 </style>

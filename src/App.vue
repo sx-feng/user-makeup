@@ -1,18 +1,32 @@
 <template>
   <router-view />
-  <GlobalLoading ref="loading" />
+  <GlobalLoading :visible="loading" />
 </template>
 
 <script>
 import GlobalLoading from "@/components/GlobalLoading.vue";
-
+import { ref } from "vue"
+import router from "@/router"
 export default {
   components: { GlobalLoading },
-  mounted() {
-    // 挂载全局 loading 供所有页面使用
-    this.$loading = this.$refs.loading;
+
+  setup() {
+    const loading = ref(false)
+
+    router.beforeEach((to, from, next) => {
+      loading.value = true
+      next()
+    })
+
+    router.afterEach(() => {
+      setTimeout(() => {
+        loading.value = false
+      }, 200)  // 动画时间与组件同步
+    })
+
+    return { loading }
   }
-};
+}
 </script>
 
 

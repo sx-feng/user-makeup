@@ -32,10 +32,10 @@
     <!-- 右侧：客服 & 设置 -->
     <div class="mine-header-right">
       <button class="icon-btn" @click="$emit('service-click')">
-        <span class="icon-symbol">🎧</span>
+        <span class="icon-symbol"><img src="/icons/客服.png" alt="客服"></span>
       </button>
       <button class="icon-btn" @click="$emit('setting-click')">
-        <span class="icon-symbol">⚙️</span>
+        <span class="icon-symbol"><img src="/icons/设置.png" alt="设置"></span>
       </button>
     </div>
   </div>
@@ -188,4 +188,11 @@ const statsText = computed(() => {
 .icon-symbol {
   font-size: 1.5rem; /* 24px → 保持你的原样 */
 }
+.icon-symbol img {
+  width: 1.25rem;   /* ≈ 20px */
+  height: 1.25rem;  /* ≈ 20px */
+  object-fit: contain;
+  display: block;
+}
+
 </style>
